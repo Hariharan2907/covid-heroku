@@ -1,3 +1,7 @@
 streamlit
 pandas
 matplotlib
+calendar
+datetime
+numpy
+seaborn

@@ -11,8 +11,9 @@ import datetime as dt
 #import matplotlib.ticker as ticker
 #from pylab import *
 
-st.title("All Cause and COVID-19 Deaths for 2019-2020")
-st.markdown("---")
+st.title("All Cause Deaths and COVID-19 Deaths for 2019-2020")
+st.markdown("-----")
+st.markdown("**Provisonal counts of all cause deaths by week the deaths occured, by state, and by all causes of death. This dataset also includes weekly provisional counts of death for COVID-19, as underlying or multiple cause of death.**")
 #CDC dataset
 url="https://data.cdc.gov/api/views/muzy-jte6/rows.csv?accessType=DOWNLOAD"
 #df=pd.read_csv(url,error_bad_lines=False)
@@ -45,9 +46,19 @@ states = st.sidebar.multiselect("Choose states",merged['Jurisdiction of Occurren
 
 if not states:
     st.error("Please select a state")
+def listToString(s):  
     
+    # initialize an empty string 
+    str1 = ""  
     
-st.subheader("Weekly Death Rate")
+    # traverse in the string   
+    for ele in s:  
+        str1 += ele   
+    
+    # return string   
+    return str1      
+selected_state = listToString(states)   
+st.write("Weekly Death Rates for ",selected_state)
 new_df = merged[merged['Jurisdiction of Occurrence'].isin(states)]
 new_df['Population'] = new_df['Population'].str.replace(',','').astype(float)
 new_df['Capita'] = (new_df['All Cause']/new_df['Population']) * 1000
@@ -60,8 +71,8 @@ df2 = new_df
 new_df = new_df.drop(['All Cause','COVID-19 (U071, Multiple Cause of Death)','Jurisdiction of Occurrence','States'],axis=1)
 fig, ax = plt.subplots()
 plt.figure(figsize=(13,7))
-st.write(new_df)
-plt.title("COVID-19 Deaths", fontsize = 20, style = 'normal')
+#st.write(new_df)
+plt.title("Weekly COVID-19 Deaths (2019-2020) for " + selected_state, fontsize = 20, style = 'normal')
 sns.lineplot('MMWR Week','Capita_COVID',hue='MMWR Year',data=new_df,ci=None,palette = ['red','black'],legend = 'full')
 axes1 = plt.gca()
 axes1.set_xlabel("Week Number")
@@ -72,6 +83,7 @@ plt.xticks(rotation=90)
 plt.grid(linewidth=0.5)
 st.pyplot()
 
+#st.markdown(" :warning: Note that the number of deaths reported in this graph may be incomplete due to lag in time (approx. 6 - 8 weeks) between the time the death occured and when the death certificate is completed.") 
     
 
 #new_df['month'] = pd.DatetimeIndex(new_df['Week Ending Date']).month
@@ -104,9 +116,9 @@ df2['date'] = pd.to_datetime(df2['date'],format = '%Y-%m-%d')
 df2['MM-DD'] = df2['date'].dt.strftime('%m-%d')
 
 #df2=df2.groupby(['MMWR Week','MMWR Year']).mean().unstack()
-st.write(df2)
+#st.write(df2)
 plt.figure(figsize=(13,7))
-plt.title("All Cause Deaths", fontsize = 20, style = 'normal')
+plt.title("Weekly All Cause Deaths (2019-2020) for "+selected_state, fontsize = 20, style = 'normal')
 sns.lineplot('MMWR Week','Capita',hue='MMWR Year',data=df2,ci=None,legend = 'full',palette = ['red','black'],sort = False)
 axes1 = plt.gca()
 axes1.set_xlabel("Week Number")
@@ -114,19 +126,13 @@ plt.ylabel("Capita per 1000")
 x= df2['MMWR Week']
 plt.xticks(np.arange(min(x), max(x)+1, 1.0))
 plt.xticks(rotation=90)
-"""
-axes2 = axes1.twiny()
-axes2.set_xlabel("Month")
-ticks = np.arange(0,13,1)
-axes2.set_xticks(ticks)
-"""
-
-
-
-
+#axes2 = axes1.twiny()
+#axes2.set_xlabel("Month")
+#ticks = np.arange(0,13,1)
+#axes2.set_xticks(ticks)
 plt.grid(linewidth = 0.5)
 st.pyplot()
-
+st.markdown(" :warning: Note that the number of deaths reported in this graph may be incomplete due to lag in time (approx. 6 - 8 weeks) between the time the death occured and when the death certificate is completed.")
 
 
 

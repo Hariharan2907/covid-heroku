@@ -25,8 +25,7 @@ def load_data():
 
 #population dataset
 pop = pd.read_csv("Population.csv")
-for col in pop.columns: 
-    print(col) 
+
 
 try:
     df_filter = load_data()
@@ -78,7 +77,7 @@ axes1 = plt.gca()
 axes1.set_xlabel("Week Number")
 plt.ylabel("Capita per 1000")
 x= new_df['MMWR Week']
-plt.xticks(np.arange(min(x), max(x)+1, 1.0))
+plt.xticks(np.arange(1, 53, 1.0))
 plt.xticks(rotation=90)
 plt.grid(linewidth=0.5)
 st.pyplot()
@@ -124,7 +123,7 @@ axes1 = plt.gca()
 axes1.set_xlabel("Week Number")
 plt.ylabel("Capita per 1000")
 x= df2['MMWR Week']
-plt.xticks(np.arange(min(x), max(x)+1, 1.0))
+plt.xticks(np.arange(1, 53, 1.0))
 plt.xticks(rotation=90)
 #axes2 = axes1.twiny()
 #axes2.set_xlabel("Month")

@@ -11,7 +11,7 @@ import datetime as dt
 #import matplotlib.ticker as ticker
 #from pylab import *
 
-st.title("All Cause Deaths and COVID-19 Deaths for 2019-2020")
+st.title("All Cause Deaths and COVID-19 Deaths in the United States for 2019-2020")
 st.markdown("-----")
 st.markdown("**Provisonal counts of all cause deaths by week the deaths occured, by state, and by all causes of death. This dataset also includes weekly provisional counts of death for COVID-19, as underlying or multiple cause of death.**")
 #CDC dataset
@@ -40,7 +40,6 @@ except urllib.error.URLError as e:
     )
 
 merged = pd.merge(df_filter,pop,left_on='Jurisdiction of Occurrence', right_on = 'States')
-st.write(merged)
 states = st.sidebar.multiselect("Choose states",merged['Jurisdiction of Occurrence'].unique())
 
 if not states:
@@ -57,13 +56,14 @@ def listToString(s):
     # return string   
     return str1      
 selected_state = listToString(states)   
-st.write("Weekly Death Rates for ",selected_state)
+
 new_df = merged[merged['Jurisdiction of Occurrence'].isin(states)]
 new_df['Population'] = new_df['Population'].str.replace(',','').astype(float)
 new_df['Capita'] = (new_df['All Cause']/new_df['Population']) * 1000
 new_df['Capita_COVID'] = (new_df['COVID-19 (U071, Underlying Cause of Death)']/new_df['Population']) * 1000
-st.write(new_df)
+#st.write(new_df)
 df2 = new_df
+df3 = new_df 
 
 
 #plot 1
@@ -132,41 +132,13 @@ plt.xticks(rotation=90)
 plt.grid(linewidth = 0.5)
 st.pyplot()
 st.markdown(" :warning: Note that the number of deaths reported in this graph may be incomplete due to lag in time (approx. 6 - 8 weeks) between the time the death occured and when the death certificate is completed.")
+st.markdown("---")
+st.write("Weekly Death Rates for ",selected_state)
+st.write(df3)
+st.write("Weekly Death Rates for all states")
+st.write(merged)
 
 
-
-#years = st.sidebar.multiselect("Choose the year",new_df['year'].unique())
-#final = new_df[new_df['year'].isin(years)]
-
-#is_2019 = new_df['year'] == 2019
-#final_2019 = new_df[is_2019]
-#ax = final_2019.plot(x="Week Ending Date", y="COVID-19 (U071, Multiple Cause of Death)", kind='scatter')
-
-#is_2020 = new_df['year'] == 2020
-#final_2020 = new_df[is_2020]
-#final_2020.plot(y="COVID-19 (U071, Multiple Cause of Death)",ax=ax,kind="scatter")
-
-#fig, ax = plt.subplots(figsize=(10,6))
-#new_df=new_df.groupby(['month','year']).mean().unstack()
-#st.write(new_df)
-#new_df.plot(ax=ax)
-
-#ax.set_title(label='COVID-19 (U071, Underlying Cause of Death) in 2019 and 2020')
-#ax.legend(loc = 'upper right')
-
-#st.pyplot()
-
-#df2 = df2.drop(['COVID-19 (U071, Multiple Cause of Death)','COVID-19 (U071, Underlying Cause of Death)'],axis = 1)
-#df2['year'] = pd.DatetimeIndex(df2['Week Ending Date']).year
-#df2['month'] = pd.DatetimeIndex(df2['Week Ending Date']).month
-#fig, ax = plt.subplots(figsize=(10,6))
-#df2.groupby(['month','year']).mean().unstack().plot(ax=ax)
-#ax.set_title(label='All Cause Deaths in 2019 and 2020')
-#ax.legend(loc = 'bottom left')
-#st.pyplot()
-
-
-#new_df.groupby(['month','year']).mean().unstack().plot(x="Week Ending Date", y="COVID-19 (U071, Multiple Cause of Death)", kind='scatter')
 
 
 

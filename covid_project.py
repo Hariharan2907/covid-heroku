@@ -137,7 +137,7 @@ st.write("Weekly Death Rates for ",selected_state)
 st.write(df3)
 st.write("Weekly Death Rates for all states")
 st.write(merged)
-
+st.write("Data Source: Weekly Counts of Deaths by State and Select Causes, 2019-2020, https://data.cdc.gov/NCHS/Weekly-Counts-of-Deaths-by-State-and-Select-Causes/muzy-jte6")
 
 
 

@@ -20,6 +20,7 @@ st.markdown("**Provisonal counts of all cause deaths by week the deaths occured,
 #CDC dataset
 url="https://data.cdc.gov/api/views/muzy-jte6/rows.csv?accessType=DOWNLOAD"
 #df=pd.read_csv(url,error_bad_lines=False)
+@st.cache()
 def load_data():
     df_filter=pd.read_csv(url,error_bad_lines=False, usecols=["Jurisdiction of Occurrence","MMWR Year","MMWR Week","Week Ending Date","All Cause","COVID-19 (U071, Multiple Cause of Death)","COVID-19 (U071, Underlying Cause of Death)"])
     return df_filter

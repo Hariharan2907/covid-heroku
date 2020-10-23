@@ -20,7 +20,7 @@ st.markdown("**Provisonal counts of all cause deaths by week the deaths occured,
 #CDC dataset
 url="https://data.cdc.gov/api/views/muzy-jte6/rows.csv?accessType=DOWNLOAD"
 #df=pd.read_csv(url,error_bad_lines=False)
-@st.cache
+@st.cache(allow_output_mutation=True)
 def load_data():
     df_filter=pd.read_csv(url,error_bad_lines=False, usecols=["Jurisdiction of Occurrence","MMWR Year","MMWR Week","Week Ending Date","All Cause","COVID-19 (U071, Multiple Cause of Death)","COVID-19 (U071, Underlying Cause of Death)"])
     return df_filter
@@ -65,6 +65,7 @@ if not states:
     st.write(us_df_rem)
     ()
     #---------------------------------------------------------------------------------------------------------------------
+   
     plt.figure(figsize=(13,7))
     plt.title("Weekly All Cause Deaths (2019-2020) for the United States", fontsize = 20, style = 'normal')
     sns.lineplot('MMWR Week','Capita',hue='MMWR Year',data=us_df,ci=None,legend = 'full',palette = ['blue','black'],sort = False)
@@ -88,7 +89,7 @@ if not states:
     axes2.xaxis.set_label_position('bottom')
     axes2.spines['bottom'].set_position(('outward', 36))
     axes2.set_xlabel('Month')
-    st.pyplot()
+    st.pyplot() 
     #---------------------------------------------------------------------------------------------------------------------
     plt.figure(figsize=(13,7))
     plt.title("Weekly COVID-19 Deaths (2019-2020) for the United States", fontsize = 20, style = 'normal')
@@ -114,6 +115,7 @@ if not states:
     st.markdown(" :warning: Note that the number of deaths reported in this graph may be incomplete due to lag in time (approx. 6 - 8 weeks) between the time the death occured and when the death certificate is completed.")
     st.markdown("---")
     st.write("Data Source: Weekly Counts of Deaths by State and Select Causes, 2019-2020, https://data.cdc.gov/NCHS/Weekly-Counts-of-Deaths-by-State-and-Select-Causes/muzy-jte6")
+    
 #---------------------------------------------------------------------------------------------------------------------    
 #functions    
 def listToString(s):      
@@ -133,7 +135,7 @@ if states:
     df3 = new_df 
 #---------------------------------------------------------------------------------------------------------------------
 
-
+"""
     new_df = new_df.drop(['All Cause','COVID-19 (U071, Multiple Cause of Death)','Jurisdiction of Occurrence','States'],axis=1)
     fig, ax = plt.subplots()
     plt.figure(figsize=(13,7))
@@ -189,7 +191,7 @@ if states:
     axes2.spines['bottom'].set_position(('outward', 36))
     st.pyplot()
 
-
+"""
 #---------------------------------------------------------------------------------------------------------------------
     #notes 
     st.markdown(" :warning: Note that the number of deaths reported in this graph may be incomplete due to lag in time (approx. 6 - 8 weeks) between the time the death occured and when the death certificate is completed.")

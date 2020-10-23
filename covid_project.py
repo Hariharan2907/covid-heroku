@@ -194,13 +194,13 @@ if states:
 """
 #---------------------------------------------------------------------------------------------------------------------
     #notes 
-    st.markdown(" :warning: Note that the number of deaths reported in this graph may be incomplete due to lag in time (approx. 6 - 8 weeks) between the time the death occured and when the death certificate is completed.")
-    st.markdown("---")
-    st.write("Weekly Death Rates for ",selected_state)
-    st.write(df3)
-    st.write("Weekly Death Rates for all states")
-    st.write(merged)
-    st.write("Data Source: Weekly Counts of Deaths by State and Select Causes, 2019-2020, https://data.cdc.gov/NCHS/Weekly-Counts-of-Deaths-by-State-and-Select-Causes/muzy-jte6")
+st.markdown(" :warning: Note that the number of deaths reported in this graph may be incomplete due to lag in time (approx. 6 - 8 weeks) between the time the death occured and when the death certificate is completed.")
+st.markdown("---")
+st.write("Weekly Death Rates for ",selected_state)
+st.write(df3)
+st.write("Weekly Death Rates for all states")
+st.write(merged)
+st.write("Data Source: Weekly Counts of Deaths by State and Select Causes, 2019-2020, https://data.cdc.gov/NCHS/Weekly-Counts-of-Deaths-by-State-and-Select-Causes/muzy-jte6")
 
 
 
